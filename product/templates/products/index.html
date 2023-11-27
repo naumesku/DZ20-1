@@ -1,0 +1,17 @@
+{% extends 'products/base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+        {% for object in object_list %}
+            <div class="col-3">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ object.name}}</h4>
+                        <a class="p-2 btn btn-lg btn-block btn-outline-primary" href="{% url 'products:one' object.pk %}">Посмотреть </a>
+                    </div>
+                </div>
+            </div>
+        {%  endfor %}
+        </div>
+    </div>
+{% endblock %}
