@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <div class="col-12 mb-5">
+        <a class="btn btn-outline-primary" href="{% url 'blog:blog_create' %}">Добавить Статью</a>
+        <a class="btn btn-outline-primary" href="{% url 'blog:blog_list' %}"> Вернуться к опубликованным статьям</a>
+    </div>
+    {% for object in object_list %}
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <div class="card-body">
+              <p class="card-text">
+                    {{ object|title }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a href="{% url 'blog:blog_detail' object.pk %}"
+                    class="btn btn-sm btn-outline-secondary">Подробнее </a>
+                    <a href="{% url 'blog:blog_edit' object.pk %}" type="button"
+                    class="btn btn-sm btn-outline-secondary">Изменить</a>
+                    <a href="{% url 'blog:blog_delete' object.pk %} " type="button"
+                    class="btn btn-sm btn-outline-secondary">Удалить</a>
+                    {% if object.is_published %}
+                        <a class="btn btn-warning" href="{% url 'blog:toggle_published' object.pk %}">Снять с публикации</a>
+                    {% else %}
+                        <a class="btn btn-success" href="{% url 'blog:toggle_published' object.pk %}">Опубликовать</a>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+{% endblock %}
