@@ -1,4 +1,3 @@
-import datetime
 from django import template
 
 register = template.Library()
@@ -7,9 +6,8 @@ register = template.Library()
 @register.filter()
 def my_media(vol):
     if vol:
-        # return f'/media/{vol}'
-        return f'{vol}'
-
+        return f'/media/{vol}'
+        # return f'{vol}'
 
     return '#'
 

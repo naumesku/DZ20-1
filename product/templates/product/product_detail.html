@@ -1,0 +1,29 @@
+{% extends 'product/base.html' %}
+{% load tags %}
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-3">
+                <div class="card mb-4 box-shadow">
+                     <img src="{{ object.picture|my_media}}"
+                          class="img-fluid"
+                          alt="{{ object.name}}">
+                </div>
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ object.name}}</h4>
+                        <h6 class="my-0 font-weight-normal"> Категория: {{ object.category }}</h6>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ object.price }}</h1>
+                        </h2>руб/кг</h2>
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li>О товаре:
+                            {{ object.description|slice:":100" }}
+                        </li>
+                    </ul>
+                    <a class="p-2 btn btn-lg btn-block btn-outline-primary" href=>Купить </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
