@@ -4,7 +4,6 @@
         <a class="btn btn-outline-primary" href="{% url 'blog:blog_all_list' %}">Посмотреть все статьи/редактировать </a>
     </div>
     {% for object in object_list %}
-        {% if object.is_published %}
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
                 <div class="card-body">
@@ -27,6 +26,5 @@
                 </div>
               </div>
             </div>
-        {% endif %}
     {% endfor %}
 {% endblock %}

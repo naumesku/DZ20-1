@@ -8,6 +8,9 @@ from blog.models import Blog
 class BlogListView(ListView):
     model = Blog
 
+    def get_queryset(self):
+        return Blog.objects.filter(is_published=True)
+
 class BlogAllListView(ListView):
     model = Blog
     template_name = 'blog/blog_all_list.html'
@@ -30,6 +33,8 @@ class BlogCreateView(CreateView):
 class BlogDeleteView(DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:blog_list')
+
+
 
 class BlogDetailView(DetailView):
     model = Blog
