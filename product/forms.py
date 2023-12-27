@@ -1,11 +1,11 @@
 from django import forms
+
+from product.config import prohibited_products
 from product.models import Product, Version
 
 
 class ProductForm(forms.ModelForm):
 
-    prohibited_products = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция',
-                           'радар']
 
     class Meta:
         model = Product
@@ -14,7 +14,7 @@ class ProductForm(forms.ModelForm):
     def clean_name(self):
         cleaned_data = self.cleaned_data['name']
 
-        if cleaned_data.lower() in self.prohibited_products:
+        if cleaned_data.lower() in prohibited_products:
             raise forms.ValidationError('В названии присутствует запрещенное слово')
 
         return cleaned_data

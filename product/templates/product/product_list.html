@@ -10,13 +10,14 @@
                 <div class="card mb-4 box-shadow">
                     <div class="card-header">
                         <h4 class="my-0 font-weight-normal">{{ object.name}}</h4>
-                            <div class="row"> Версия продукта:
-                                {% if version %}
-                                    <small class="d-block mb-3 text-muted">Актуальная версия:
-
-                                    </small>
-                                {% endif %}
-                            </div>
+                             {% if object.version_set.all %}
+                                <div class="row"> Версия продукта:
+                                    {% for v in object.version_set.all %}
+                                        {{ v.version_title }}
+                                        {% if not forloop.last %}|{% endif %}
+                                    {% endfor %}
+                                </div>
+                             {% endif %}
                         <a class="p-2 btn btn-lg btn-block btn-outline-primary" href="{% url 'product:product_details' object.pk %}">Посмотреть </a>
                     </div>
                 </div>
