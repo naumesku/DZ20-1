@@ -1,8 +1,10 @@
 {% extends 'product/base.html' %}
 {% block content %}
-    <div class="col-12 md-5">
-        <a class="btn btn-outline-primary" href="{% url 'product:product_create' %}">Добавить продукт</a>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="col-12 md-5">
+            <a class="btn btn-outline-primary" href="{% url 'product:product_create' %}">Добавить продукт</a>
+        </div>
+    {% endif %}
     <div class="container">
         <div class="row text-center">
         {% for object in object_list %}
@@ -10,14 +12,17 @@
                 <div class="card mb-4 box-shadow">
                     <div class="card-header">
                         <h4 class="my-0 font-weight-normal">{{ object.name}}</h4>
-                             {% if object.version_set.all %}
-                                <div class="row"> Версия продукта:
+                            <div class="row"> Версия продукта:
+                                {% if object.version_set.all %}
                                     {% for v in object.version_set.all %}
                                         {{ v.version_title }}
                                         {% if not forloop.last %}|{% endif %}
                                     {% endfor %}
-                                </div>
-                             {% endif %}
+                                {% else %}
+                                    Не задана
+                                {% endif %}
+                            </div><br>
+                            <h6 class="my-0 font-weight-normal"> Создатель: {{ object.user_own|default:'Бог' }}</h6>
                         <a class="p-2 btn btn-lg btn-block btn-outline-primary" href="{% url 'product:product_details' object.pk %}">Посмотреть </a>
                     </div>
                 </div>

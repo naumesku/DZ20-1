@@ -1,5 +1,5 @@
 from django.forms import inlineformset_factory
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
@@ -20,17 +20,24 @@ def contacts(request):
 
 class ProductDetailView(DetailView):
     model = Product
-
+    form_class = ProductForm
 
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('product:index')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.user_own = self.request.user
+        self.object.save()
+
+        return super().form_valid(form)
+
+
 class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
-    # success_url = reverse_lazy('product:index')
 
     def get_success_url(self):
         return reverse('product:product_update', args=[self.kwargs.get('pk')])
@@ -40,6 +47,7 @@ class ProductUpdateView(UpdateView):
         VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
         if self.request.method == 'POST':
             formset = VersionFormset(self.request.POST, instance=self.object)
+            # context_data['version'] = get_object_or_404(Version, pk=self.kwargs.get('pk'))
         else:
             formset = VersionFormset(instance=self.object)
 
